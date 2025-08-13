@@ -73,34 +73,6 @@ curl -X POST http://localhost:8080/notes \
   "updatedAt": "2025-08-13T12:34:56"
 }
 ````
-### Example 2 — Title exceeds max length (dynamic {max} message)
-````
-curl -X POST http://localhost:8080/notes \
-  -H "Content-Type: application/json" \
-  -H "Accept-Language: fil" \
-  -d '{
-        "title": "MahabangPamagat123",
-        "body": "May laman"
-      }'
-
-````
-#### Response (HTTP 400) 
-````
-{
-  "timestamp": "2025-08-13T12:47:12",
-  "status": 400,
-  "error": "Validation Failed",
-  "path": "/notes",
-  "fieldErrors": [
-    {
-      "field": "title",
-      "message": "Hanggang 10 na karakter lamang ang pamagat",
-      "rejectedValue": "MahabangPamagat123",
-      "code": "Size"
-    }
-  ]
-}
-````
 
 ###  Technologies Used
 | Technology                                      | Why It’s Used                                                      |
@@ -117,7 +89,9 @@ curl -X POST http://localhost:8080/notes \
 
 ###  Sample: Validation in Filipino (i18n Demonstration) 
 #### The API supports localized validation error messages.
-Here’s an example of sending invalid data (empty title) with the Accept-Language: fil header: 
+
+### Example 1 — example of sending invalid data (empty title) with the Accept-Language: fil header
+
 #### Request
 ````
 curl -X POST http://localhost:8080/notes \
@@ -128,7 +102,7 @@ curl -X POST http://localhost:8080/notes \
 "body": "Maikling nilalaman"
 }'
 ````
-### Response (HTTP 400 Bad Request) 
+#### Response (HTTP 400 Bad Request) 
 ````
 {
 "timestamp": "2025-08-13T12:45:30",
@@ -146,6 +120,34 @@ curl -X POST http://localhost:8080/notes \
 }
 ````
 
+### Example 2 — Title exceeds max length (dynamic {max} message)
+````
+curl -X POST http://localhost:8080/notes \
+  -H "Content-Type: application/json" \
+  -H "Accept-Language: fil" \
+  -d '{
+        "title": "MahabangPamagat123",
+        "body": "May laman"
+      }'
+
+````
+#### Response (HTTP 400)
+````
+{
+  "timestamp": "2025-08-13T12:47:12",
+  "status": 400,
+  "error": "Validation Failed",
+  "path": "/notes",
+  "fieldErrors": [
+    {
+      "field": "title",
+      "message": "Hanggang 10 na karakter lamang ang pamagat",
+      "rejectedValue": "MahabangPamagat123",
+      "code": "Size"
+    }
+  ]
+}
+````
 
 
 
